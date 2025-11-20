@@ -6,6 +6,7 @@ import PakejHajiSection from '@/components/sections/pakej-haji-section';
 import { TestimonialSection } from '@/components/sections/testimonial-section';
 import { ContactSection, FooterSection } from '@/components/sections';
 import { BannerPopup } from '@/components/ui/banner-popup';
+import { FloatingActionButton } from '@/components/ui/floating-action-button';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <ContactSection />
       </main>
       <FooterSection />
+      <FloatingActionButton />
     </div>
   );
 }
