@@ -85,7 +85,7 @@ export function BannerPopup() {
           className="relative w-full aspect-3/4 max-h-[85vh] md:max-h-[80vh] bg-transparent rounded-xl overflow-visible animate-in zoom-in-95 duration-200 cursor-pointer transition-shadow"
           onClick={handleBannerClick}>
           <Image
-            src="/images/banner.png"
+            src="/images/banner-new.png"
             alt="Banner Promosi"
             fill
             className="object-contain"
