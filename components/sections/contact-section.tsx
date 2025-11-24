@@ -341,7 +341,7 @@ export function ContactSection() {
                             ? 'border-red-500 focus-visible:ring-red-500'
                             : ''
                         }`}
-                        placeholder="Nombor WhatsApp Aktif"
+                        placeholder="139938833"
                         disabled={status === 'submitting'}
                       />
                       {fieldErrors.whatsapp && (

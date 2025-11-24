@@ -3,9 +3,21 @@
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
-import { itemFade, sectionFade, staggerContainer, viewportTight } from '@/lib/motion';
+import {
+  itemFade,
+  sectionFade,
+  staggerContainer,
+  viewportTight,
+} from '@/lib/motion';
 
-const specialOffers = [
+interface SpecialOffer {
+  title: string;
+  smallTitle?: string;
+  description: string;
+  image: string;
+}
+
+const specialOffers: SpecialOffer[] = [
   {
     title: 'Diskaun Eksklusif Sehingga RM7,000',
     description: `
@@ -17,64 +29,51 @@ const specialOffers = [
   <br/>
   Terhad untuk 50 Jemaah (P1) Terawal Sahaja.
 `,
-    image: '/images/special-offer/diskaun.jpg',
+    image: '/images/special-offer/spc-1.jpg',
   },
   {
     title: 'Percuma Penghantaran Kargo 10Kg',
     description:
       'Bawa pulang cenderamata, kurma dan lain-lain. Kami faham keinginan anda untuk berkongsi rezeki dari Tanah Suci. Oleh itu, kami hadiahkan 10kg penghantaran kargo FGV percuma.',
-    image: '/images/special-offer/FGV.png',
+    image: '/images/special-offer/spc-2.jpg',
   },
   {
-    title: 'Percuma Pemeriksaan Kesihatan – Bernilai sehingga RM250',
-    description: `Kesihatan anda adalah aset utama dalam melaksanakan ibadah haji. Kami menaja kos pemeriksaan bernilai sehingga RM250.00 berdasarkan resit daripada klinik/hospital. 
+    title: 'Percuma Pemeriksaan Kesihatan',
+    smallTitle: 'Bernilai sehingga Rm250',
+    description: `Kesihatan anda adalah aset utama dalam melaksanakan ibadah haji. Kami menaja kos pemeriksaan bernilai sehingga RM250.00 berasaskan resit daripada klinik/hospital.
       <br/>
-      Menepati kemampuan (Istito’ah) dari segi kesihatan.`,
-    image: '/images/special-offer/medical.jpg',
+      <br/>
+      Menepati kemampuan (Istitio'ah) dari segi kesihatan.
+`,
+    image: '/images/special-offer/spc-3.jpg',
   },
   {
     title: 'Percuma Tiket Keretapi Laju Haramain (Ekonomi)',
+    smallTitle: 'Perjalanan Selesa Makkah - Madinah (atau sebaliknya)',
     description: `
-    Perjalanan Selesa Makkah – Madinah (atau sebaliknya)<br/><br/>
-    Alami teknologi pengangkutan moden di Arab Saudi. Kami menaja tiket perjalanan kereta api laju Haramain yang hanya mengambil masa sekitar <strong>2 jam</strong>, jauh lebih pantas berbanding perjalanan bas <strong>6–8 jam</strong>.<br/><br/>
-    
-    <strong>Dengan tiket Haramain:</strong><br/>
-    • Jemaah lebih cepat tiba di destinasi<br/>
-    • Kurang keletihan<br/>
-    • Perjalanan lebih selesa<br/>
-    • Masa ibadah dapat dioptimumkan<br/><br/>
-
-    <em>Nota: Tawaran ini tertakluk kepada ketersediaan perkhidmatan dan kelulusan Pihak Berkuasa Arab Saudi.</em>
+    Alami teknologi pengangkutan termoden di Arab Saudi. Kami menaik taraf perjalanan antara dua kota suci anda daripada bas (yang mengambil masa 5-6 jam) kepada Keretapi Laju Haramain (sekitar 2 jam+). Ini bermakna anda jimat masa, tenaga dan dapat tiba di destinasi dengan keadaan segar, bagi membolehkan anda terus merebut peluang beribadah di Masjidil Haram atau Masjid Nabawi.
+    <br/>
+    <br/>
+    <strong>*Tawaran ini adalah tertakluk kepada ketersediaan perkhidmatan dan kelulusan Pihak Berkuasa Arab Saudi.</strong>
   `,
-    image: '/images/special-offer/haramain.webp',
+    image: '/images/special-offer/spc-4.jpg',
   },
   {
     title: 'Percuma Kursus Haji Perdana Eksklusif',
+    smallTitle: '2 Hari 1 Malam (Termasuk Penginapan Hotel)',
     description: `
-    <strong>2 Hari 1 Malam (Termasuk Penginapan Hotel)</strong><br/><br/>
-    Persiapan ilmu adalah bekalan haji terbaik. Kursus eksklusif oleh Rayhar Travels ini bukan sekadar kursus teori di dewan, tetapi program intensif selama 2 hari 1 malam yang merangkumi:<br/><br/>
-    
-    • Latihan praktikal ibadah haji<br/>
-    • Simulasi perjalanan haji/umrah<br/>
-    • Bimbingan ustaz, mutawif & tenaga pengajar berpengalaman<br/><br/>
-    
-    Tujuannya adalah untuk memastikan para jemaah benar-benar bersedia dari aspek ilmu dan praktikal.
+    Persiapan Ilmu adalah bekalan haji terbaik. Kursus eksklusif oleh Rayhar Travels ini bukan sekadar kursus teori di dewan. Ia adalah program intensif selama 2 hari 1 malam, lengkap dengan penginapan hotel. Anda akan menjalani simulasi praktikal manasik haji dalam suasana yang selesa dan terkawal. Dapatkan bimbingan terus daripada para asatizah kami yang berpengalaman agar anda dapat melaksanakan ibadah haji sempurna mungkin.
   `,
-    image: '/images/special-offer/7.png',
+    image: '/images/special-offer/spc-5.jpg',
   },
   {
     title: 'Percuma Majlis Kesyukuran “Ihtifal Mahabbah”',
+    smallTitle: 'Meraikan Jemaah di Tanah Suci',
     description: `
-    <strong>Meraikan Jemaah di Tanah Suci</strong><br/><br/>
-    Perhimpunan eksklusif ini diadakan bagi mengabadikan nostalgia pengalaman haji musim 1447H. Dalam majlis ini, kami akan menganjurkan:<br/><br/>
+    Perhimpunan ini adalah untuk menjadikan nostalgia pengalaman haji musim 1447H. Kami akan menganjurkan satu majlis kesyukuran dan makan malam istimewa di Tanah Suci. Majlis 'Ihtifal Mahabbah' ini adalah tanda penghargaan kami dan <strong>platform</strong> untuk mengeratkan silaturahim sesama jemaah.
 
-    • Majlis kesyukuran<br/>
-    • Jamuan makan istimewa<br/>
-    • Perhimpunan silaturahim sesama jemaah<br/><br/>
-
-    Majlis Ihtifal Mahabbah ini adalah tanda penghargaan kami kepada jemaah, serta platform untuk mengeratkan hubungan sesama tetamu Allah.
   `,
-    image: '/images/special-offer/9.png',
+    image: '/images/special-offer/spc-6.jpg',
   },
 ];
 
@@ -93,9 +92,13 @@ export function SpecialPriceSection() {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       </div>
 
-      <motion.div className="container mx-auto px-4 max-w-7xl relative z-10" variants={staggerContainer()}>
+      <motion.div
+        className="container mx-auto px-4 max-w-7xl relative z-10"
+        variants={staggerContainer()}>
         {/* Header */}
-        <motion.div className="mb-12 md:mb-16 lg:mb-20 text-center" variants={itemFade}>
+        <motion.div
+          className="mb-12 md:mb-16 lg:mb-20 text-center"
+          variants={itemFade}>
           <div className="inline-block mb-4 px-4 py-2 bg-primary/10 rounded-full">
             <span className="text-primary font-semibold text-sm md:text-base">
               Tawaran Istimewa
@@ -117,9 +120,14 @@ export function SpecialPriceSection() {
         </motion.div>
 
         {/* Offers Grid */}
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10" variants={staggerContainer(0.03, 0.05)}>
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10"
+          variants={staggerContainer(0.03, 0.05)}>
           {specialOffers.map((offer, index) => (
-            <motion.div key={offer.title} variants={itemFade} className="h-full">
+            <motion.div
+              key={offer.title}
+              variants={itemFade}
+              className="h-full">
               <Card className="bg-white border border-gray-200 overflow-hidden flex flex-col h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative group">
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-linear-to-br from-primary/0 via-primary/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -137,6 +145,11 @@ export function SpecialPriceSection() {
                   <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors duration-300">
                     {offer.title}
                   </CardTitle>
+                  {offer.smallTitle && (
+                    <p className="text-xs sm:text-sm font-normal text-muted-foreground mt-1.5 sm:mt-2">
+                      {offer.smallTitle}
+                    </p>
+                  )}
                 </CardHeader>
 
                 <CardContent className="flex-1 flex flex-col px-6 pb-6 pt-0 relative z-10">

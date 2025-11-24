@@ -110,19 +110,20 @@ export function HeroSection() {
             variants={itemFade}>
             {/* Headline */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
-              Menuju Perjalanan Suci
+              SEJAK 1990/1410H
               <br />
-              <span className="text-primary">Haji & Umrah</span>
-              <br />
-              yang Berkesan
+              <span className="text-primary">37 Tahun</span>
             </h1>
 
             {/* Description */}
             <p className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Agensi perjalanan haji dan umrah yang dipercayai membantu anda
-              mewujudkan impian ibadah suci dengan pakej lengkap, perkhidmatan
-              profesional, penginapan selesa, dan bimbingan rohani yang
-              mencukupi.
+              Kami bukan sekadar menguruskan perjalanan ibadah; kami junjung
+              amanah yang suci menyantuni tetamu Allah dan Rasul dengan penuh
+              tanggungjawab. Sebagai antara perintis pengurusan haji di
+              Malaysia, kami telah berkhidmat sejak tahun 1990 (1410 Hijrah).
+              Lebih tiga dekad pengalaman ini bukan sekadar angka, tetapi
+              warisan yang membentuk keutuhan nilai kami dalam memahami denyut
+              nadi dan keperluan setiap jemaah.
             </p>
 
             {/* CTA Button */}
@@ -146,15 +147,15 @@ export function HeroSection() {
                 {/* Kaaba/Mosque Icon - Large Center Element */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                   <div className="relative">
-                    {/* Main Kaaba Shape */}
-                    <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-120 lg:h-120">
+                    {/* Hero Image */}
+                    <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-64 md:h-64 lg:w-120 lg:h-120">
                       <Image
-                        src="/images/ka'bah3.png"
+                        src="/images/hero-image.png"
                         alt="Ka'bah"
                         fill
                         className="object-contain drop-shadow-lg"
                         priority
-                        sizes="(max-width: 768px) 192px, (max-width: 1024px) 256px, 320px"
+                        sizes="(max-width: 640px) 288px, (max-width: 768px) 320px, (max-width: 1024px) 256px, 480px"
                         unoptimized
                       />
                     </div>

@@ -3,11 +3,9 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { X } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 export function BannerPopup() {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     // Show popup after a short delay
@@ -60,8 +58,14 @@ export function BannerPopup() {
   };
 
   const handleBannerClick = () => {
-    router.push('/pakej-haji');
     setIsOpen(false);
+    // Scroll to contact section after a short delay to allow popup to close
+    setTimeout(() => {
+      const contactSection = document.getElementById('hubungi');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   if (!isOpen) return null;
@@ -85,7 +89,7 @@ export function BannerPopup() {
           className="relative w-full aspect-3/4 max-h-[85vh] md:max-h-[80vh] bg-transparent rounded-xl overflow-visible animate-in zoom-in-95 duration-200 cursor-pointer transition-shadow"
           onClick={handleBannerClick}>
           <Image
-            src="/images/banner-new.png"
+            src="/images/PERCUMA.png"
             alt="Banner Promosi"
             fill
             className="object-contain"
