@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 import {
   Select,
   SelectContent,
@@ -86,7 +87,6 @@ export function ContactSection() {
   const [status, setStatus] = useState<
     'idle' | 'submitting' | 'success' | 'error'
   >('idle');
-  const [errorMessage, setErrorMessage] = useState<string>('');
   const [fieldErrors, setFieldErrors] = useState<{
     email?: string;
     whatsapp?: string;
@@ -111,15 +111,32 @@ export function ContactSection() {
         return newErrors;
       });
     }
-
-    // Clear general error message
-    if (errorMessage) {
-      setErrorMessage('');
-    }
   };
 
   const handleCountryCodeChange = (code: string) => {
     setFormData((prev) => ({ ...prev, countryCode: code }));
+  };
+
+  const saveUserDataToLocalStorage = (
+    fullName: string,
+    email: string,
+    whatsapp: string,
+    countryCode: string
+  ) => {
+    try {
+      const userData = {
+        fullName,
+        email,
+        whatsapp,
+        countryCode,
+        submittedAt: new Date().toISOString(),
+      };
+
+      // Save to localStorage
+      localStorage.setItem('rayhar_form_submission', JSON.stringify(userData));
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
+    }
   };
 
   const selectedCountry = countryCodes.find(
@@ -130,7 +147,6 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('submitting');
-    setErrorMessage('');
     setFieldErrors({});
 
     try {
@@ -154,24 +170,45 @@ export function ContactSection() {
           setFieldErrors({
             email: data.message || 'Email ini telah digunakan sebelumnya',
           });
+          toast.error('Email Sudah Digunakan', {
+            description: data.message || 'Email ini telah digunakan sebelumnya',
+          });
         } else if (data.error?.toLowerCase().includes('whatsapp')) {
           setFieldErrors({
             whatsapp:
               data.message || 'Nomor WhatsApp ini telah digunakan sebelumnya',
           });
+          toast.error('Nomor WhatsApp Sudah Digunakan', {
+            description:
+              data.message || 'Nomor WhatsApp ini telah digunakan sebelumnya',
+          });
         } else {
-          setErrorMessage(
-            data.message || data.error || 'Gagal mengirim formulir'
-          );
+          toast.error('Gagal Mengirim Formulir', {
+            description:
+              data.message || data.error || 'Gagal mengirim formulir',
+          });
         }
         setStatus('error');
         return;
       }
 
       setStatus('success');
+
+      // Save user data to localStorage
+      saveUserDataToLocalStorage(
+        formData.fullName,
+        formData.email,
+        `${formData.countryCode}${formData.whatsapp}`,
+        formData.countryCode
+      );
+
       setFormData({ ...initialFormState });
       setFieldErrors({});
-      setErrorMessage('');
+
+      toast.success('Borang Berhasil Dikirim!', {
+        description:
+          'Terima kasih! Borang anda telah diterima. Pasukan kami akan menghubungi anda dalam masa terdekat.',
+      });
 
       setTimeout(() => {
         setStatus('idle');
@@ -179,13 +216,13 @@ export function ContactSection() {
     } catch (error) {
       console.error('Error submitting form:', error);
       setStatus('error');
-      setErrorMessage(
-        'Maaf, terjadi kesalahan saat mengirim formulir. Sila cuba lagi.'
-      );
+      toast.error('Terjadi Kesalahan', {
+        description:
+          'Maaf, terjadi kesalahan saat mengirim formulir. Sila cuba lagi.',
+      });
 
       setTimeout(() => {
         setStatus('idle');
-        setErrorMessage('');
       }, 3000);
     }
   };
@@ -265,9 +302,9 @@ export function ContactSection() {
                         </SelectValue>
                       </SelectTrigger>
                       <SelectContent
-                        className="w-[calc(100vw-2rem)] sm:w-64"
+                        className="w-[calc(100vw-2rem)] sm:w-64 overflow-x-hidden"
                         position="popper">
-                        <div className="max-h-[300px] overflow-y-auto p-1">
+                        <div className="max-h-[300px] overflow-y-auto overflow-x-hidden p-1">
                           {countryCodes.map((item: CountryCode) => (
                             <SelectItem
                               key={item.code}
@@ -344,19 +381,6 @@ export function ContactSection() {
                   )}
                 </div>
               </div>
-
-              {status === 'success' && (
-                <div className="rounded-xl border border-green-200 bg-green-50 text-green-600 text-sm px-4 py-3">
-                  Terima kasih! Borang anda telah diterima. Pasukan kami akan
-                  menghubungi anda dalam masa terdekat.
-                </div>
-              )}
-
-              {status === 'error' && errorMessage && (
-                <div className="rounded-xl border border-red-200 bg-red-50 text-red-600 text-sm px-4 py-3">
-                  {errorMessage}
-                </div>
-              )}
 
               <motion.div
                 whileHover={{ scale: status === 'submitting' ? 1 : 1.015 }}
