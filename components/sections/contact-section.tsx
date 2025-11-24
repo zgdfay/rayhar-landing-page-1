@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
@@ -91,6 +91,38 @@ export function ContactSection() {
     email?: string;
     whatsapp?: string;
   }>({});
+  const [hasClaimed, setHasClaimed] = useState(false);
+
+  // Check if user has already claimed
+  useEffect(() => {
+    const checkClaimedStatus = () => {
+      try {
+        const savedData = localStorage.getItem('rayhar_form_submission');
+        if (savedData) {
+          const userData = JSON.parse(savedData);
+          setHasClaimed(true);
+          // Pre-fill form with saved data (read-only)
+          const savedCountryCode = userData.countryCode || '+60';
+          const savedWhatsapp = userData.whatsapp || '';
+          // Remove country code from whatsapp if it exists
+          const whatsappNumber = savedWhatsapp.startsWith(savedCountryCode)
+            ? savedWhatsapp.replace(savedCountryCode, '')
+            : savedWhatsapp;
+
+          setFormData({
+            fullName: userData.fullName || '',
+            countryCode: savedCountryCode,
+            whatsapp: whatsappNumber,
+            email: userData.email || '',
+          });
+        }
+      } catch (error) {
+        console.error('Error reading from localStorage:', error);
+      }
+    };
+
+    checkClaimedStatus();
+  }, []);
 
   // Memoize country codes to avoid recalculating on every render
   const countryCodes = useMemo(() => getCountryCodes(), []);
@@ -202,7 +234,13 @@ export function ContactSection() {
         formData.countryCode
       );
 
-      setFormData({ ...initialFormState });
+      // Mark as claimed
+      setHasClaimed(true);
+
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new CustomEvent('rayhar:claimed'));
+
       setFieldErrors({});
 
       toast.success('Borang Berhasil Dikirim!', {
@@ -281,7 +319,7 @@ export function ContactSection() {
                     onChange={handleChange}
                     className="bg-white/80"
                     placeholder="Nama seperti dalam IC"
-                    disabled={status === 'submitting'}
+                    disabled={status === 'submitting' || hasClaimed}
                   />
                 </div>
 
@@ -295,7 +333,7 @@ export function ContactSection() {
                     <Select
                       value={formData.countryCode}
                       onValueChange={handleCountryCodeChange}
-                      disabled={status === 'submitting'}>
+                      disabled={status === 'submitting' || hasClaimed}>
                       <SelectTrigger className="h-11 w-28 sm:w-36 bg-white/80 border-input rounded-xl px-2 sm:px-3 text-xs sm:text-sm shadow-sm hover:bg-white/90">
                         <SelectValue placeholder="Pilih negara">
                           {selectedCountry.flag} {selectedCountry.code}
@@ -342,7 +380,7 @@ export function ContactSection() {
                             : ''
                         }`}
                         placeholder="139938833"
-                        disabled={status === 'submitting'}
+                        disabled={status === 'submitting' || hasClaimed}
                       />
                       {fieldErrors.whatsapp && (
                         <p className="mt-1 text-sm text-red-600">
@@ -372,7 +410,7 @@ export function ContactSection() {
                         : ''
                     }`}
                     placeholder="nama@email.com"
-                    disabled={status === 'submitting'}
+                    disabled={status === 'submitting' || hasClaimed}
                   />
                   {fieldErrors.email && (
                     <p className="mt-1 text-sm text-red-600">
@@ -387,9 +425,11 @@ export function ContactSection() {
                 whileTap={{ scale: status === 'submitting' ? 1 : 0.98 }}>
                 <Button
                   type="submit"
-                  disabled={status === 'submitting'}
-                  className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-3 text-base font-semibold flex items-center justify-center gap-2">
-                  {status === 'submitting' ? (
+                  disabled={status === 'submitting' || hasClaimed}
+                  className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-3 text-base font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  {hasClaimed ? (
+                    <>Hadiah Sudah Diklaim</>
+                  ) : status === 'submitting' ? (
                     <>Menghantar...</>
                   ) : (
                     <>Hantar Pertanyaan</>

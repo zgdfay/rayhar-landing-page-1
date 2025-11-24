@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -34,6 +33,7 @@ interface PakejHaji {
   description: string;
   image: string;
   detailUrl: string;
+  slug?: string; // Slug from API
   colorScheme?:
     | 'pink'
     | 'blue'
@@ -270,6 +270,7 @@ export function PakejHajiSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [slugMap, setSlugMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
@@ -304,6 +305,62 @@ export function PakejHajiSection() {
     };
   }, []);
 
+  // Fetch slug mapping from API
+  useEffect(() => {
+    const fetchSlugMapping = async () => {
+      try {
+        const baseUrl =
+          process.env.NEXT_PUBLIC_BOOKING_BASE_URL ||
+          'https://rayhar-frontend-ui-web-booking.netlify.app';
+        const response = await fetch(`${baseUrl}/api/hajj`);
+        const data = await response.json();
+
+        if (data.success && data.packages) {
+          const mapping: Record<string, string> = {};
+
+          // Create mapping based on hotel name and subname
+          data.packages.forEach((pkg: any) => {
+            const title = pkg.title?.toLowerCase() || '';
+            const slug = pkg.slug || '';
+
+            // Map based on title patterns - more specific matching
+            if (title.includes('safwah') && title.includes('platinum')) {
+              mapping['safwah-platinum'] = slug;
+            } else if (
+              title.includes('safwah') &&
+              title.includes('gold') &&
+              !title.includes('silver')
+            ) {
+              mapping['safwah-gold'] = slug;
+            } else if (title.includes('safwah') && title.includes('silver')) {
+              mapping['safwah-silver'] = slug;
+            } else if (
+              title.includes('olayan') &&
+              title.includes('ajyad') &&
+              !title.includes('aziziah')
+            ) {
+              mapping['olayan-ajyad'] = slug;
+            } else if (title.includes('olayan') && title.includes('aziziah')) {
+              mapping['olayan-aziziah'] = slug;
+            } else if (title.includes('orinsis')) {
+              mapping['orinsis'] = slug;
+            } else if (title.includes('elaf') && title.includes('bait')) {
+              mapping['elaf'] = slug;
+            } else if (title.includes('mira') && title.includes('ajyad')) {
+              mapping['mira'] = slug;
+            }
+          });
+
+          setSlugMap(mapping);
+        }
+      } catch (error) {
+        console.error('Error fetching slug mapping:', error);
+      }
+    };
+
+    fetchSlugMapping();
+  }, []);
+
   const scrollToIndex = (index: number) => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
@@ -331,6 +388,56 @@ export function PakejHajiSection() {
       left: direction === 'left' ? -scrollAmount : scrollAmount,
       behavior: 'smooth',
     });
+  };
+
+  // Get slug for a pakej
+  const getSlugForPakej = (pakej: PakejHaji): string | null => {
+    const hotelName = pakej.hotelName.toLowerCase();
+    const hotelSubName = pakej.hotelSubName?.toLowerCase() || '';
+
+    // Try to match with slug map
+    if (hotelName === 'safwah') {
+      if (hotelSubName.includes('platinum')) {
+        return slugMap['safwah-platinum'] || null;
+      } else if (hotelSubName.includes('gold')) {
+        return slugMap['safwah-gold'] || null;
+      } else if (hotelSubName.includes('silver')) {
+        return slugMap['safwah-silver'] || null;
+      }
+      // Default to platinum if no subname specified
+      return slugMap['safwah-platinum'] || null;
+    } else if (hotelName === 'olayan') {
+      if (hotelSubName.includes('aziziah')) {
+        return slugMap['olayan-aziziah'] || null;
+      } else if (hotelSubName.includes('ajyad')) {
+        return slugMap['olayan-ajyad'] || null;
+      }
+      // Default to ajyad if no subname specified
+      return slugMap['olayan-ajyad'] || null;
+    } else if (hotelName === 'orinsis') {
+      return slugMap['orinsis'] || null;
+    } else if (hotelName === 'elaf') {
+      return slugMap['elaf'] || null;
+    } else if (hotelName === 'mira') {
+      return slugMap['mira'] || null;
+    }
+
+    return null;
+  };
+
+  // Handle button click to redirect to detail page
+  const handleDetailClick = (pakej: PakejHaji) => {
+    const slug = getSlugForPakej(pakej);
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BOOKING_BASE_URL ||
+      'https://rayhar-frontend-ui-web-booking.netlify.app';
+    if (slug) {
+      // Redirect to detail page tanpa tab baru
+      window.location.href = `${baseUrl}/detailhajj?slug=${slug}&agent_id=BRANCH-978764923&agent_name=HQ&agent_role=branch`;
+    } else {
+      // Fallback to original detailUrl
+      window.location.href = pakej.detailUrl;
+    }
   };
 
   return (
@@ -508,11 +615,13 @@ export function PakejHajiSection() {
                     </div>
 
                     {/* Button */}
-                    <Link href={pakej.detailUrl} className="block mt-auto">
-                      <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 md:py-4 text-sm md:text-base">
+                    <div className="block mt-auto">
+                      <Button
+                        onClick={() => handleDetailClick(pakej)}
+                        className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 md:py-4 text-sm md:text-base">
                         Maklumat Lanjut
                       </Button>
-                    </Link>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>

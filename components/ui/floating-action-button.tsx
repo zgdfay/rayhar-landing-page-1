@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Gift } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +13,43 @@ export function FloatingActionButton({
   onClick,
   className,
 }: FloatingActionButtonProps) {
+  const [hasClaimed, setHasClaimed] = useState(false);
+
+  // Check if user has already claimed
+  useEffect(() => {
+    const checkClaimedStatus = () => {
+      try {
+        const savedData = localStorage.getItem('rayhar_form_submission');
+        if (savedData) {
+          setHasClaimed(true);
+        }
+      } catch (error) {
+        console.error('Error reading from localStorage:', error);
+      }
+    };
+
+    checkClaimedStatus();
+
+    // Listen for storage changes (in case form is submitted in another tab)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'rayhar_form_submission') {
+        checkClaimedStatus();
+      }
+    };
+
+    // Listen for custom event (in case form is submitted in same tab)
+    const handleClaimed = () => {
+      checkClaimedStatus();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('rayhar:claimed', handleClaimed);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('rayhar:claimed', handleClaimed);
+    };
+  }, []);
+
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -24,6 +62,9 @@ export function FloatingActionButton({
       section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  // Don't render if user has already claimed
+  if (hasClaimed) return null;
 
   return (
     <button

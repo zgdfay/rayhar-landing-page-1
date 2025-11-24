@@ -6,15 +6,58 @@ import { X } from 'lucide-react';
 
 export function BannerPopup() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasClaimed, setHasClaimed] = useState(false);
+
+  // Check if user has already claimed
+  useEffect(() => {
+    const checkClaimedStatus = () => {
+      try {
+        const savedData = localStorage.getItem('rayhar_form_submission');
+        if (savedData) {
+          setHasClaimed(true);
+          return;
+        }
+      } catch (error) {
+        console.error('Error reading from localStorage:', error);
+      }
+    };
+
+    checkClaimedStatus();
+
+    // Listen for storage changes (in case form is submitted in another tab)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'rayhar_form_submission') {
+        checkClaimedStatus();
+      }
+    };
+
+    // Listen for custom event (in case form is submitted in same tab)
+    const handleClaimed = () => {
+      checkClaimedStatus();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('rayhar:claimed', handleClaimed);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('rayhar:claimed', handleClaimed);
+    };
+  }, []);
 
   useEffect(() => {
+    // Don't show popup if user has already claimed
+    if (hasClaimed) {
+      setIsOpen(false);
+      return;
+    }
+
     // Show popup after a short delay
     const timer = setTimeout(() => {
       setIsOpen(true);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [hasClaimed]);
 
   // Lock body scroll when popup is open
   useEffect(() => {
@@ -45,19 +88,8 @@ export function BannerPopup() {
     };
   }, [isOpen]);
 
-  const handleClose = (e: React.MouseEvent) => {
+  const handleBannerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsOpen(false);
-  };
-
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    // Close when clicking outside the banner
-    if (e.target === e.currentTarget) {
-      setIsOpen(false);
-    }
-  };
-
-  const handleBannerClick = () => {
     setIsOpen(false);
     // Scroll to contact section after a short delay to allow popup to close
     setTimeout(() => {
@@ -71,19 +103,16 @@ export function BannerPopup() {
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in-0 duration-200"
-      onClick={handleBackdropClick}>
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in-0 duration-200">
       {/* Banner Container */}
       <div className="relative w-full max-w-[90vw] md:max-w-sm lg:max-w-md">
-        {/* Close Button - positioned outside the banner */}
+        {/* Close Button */}
         <button
-          onClick={handleClose}
-          className="absolute -top-2 -right-2 z-110 w-7 h-7 md:w-8 md:h-8 rounded-full bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 flex items-center justify-center transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 active:scale-95"
-          aria-label="Tutup banner">
-          <X className="w-3.5 h-3.5 md:w-4 md:h-4" strokeWidth={2.5} />
+          onClick={handleBannerClick}
+          className="absolute top-2 right-2 md:-top-2 md:-right-2 z-10 w-9 h-9 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 group"
+          aria-label="Close banner">
+          <X className="w-5 h-5 md:w-7 md:h-7 text-gray-800 group-hover:text-gray-900" />
         </button>
-
         {/* Banner Image - clickable area */}
         <div
           className="relative w-full aspect-3/4 max-h-[85vh] md:max-h-[80vh] bg-transparent rounded-xl overflow-visible animate-in zoom-in-95 duration-200 cursor-pointer transition-shadow"
