@@ -148,14 +148,14 @@ export function HeroSection() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                   <div className="relative">
                     {/* Hero Image */}
-                    <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-64 md:h-64 lg:w-120 lg:h-120">
+                    <div className="relative w-96 h-96 sm:w-md sm:h-112 md:w-64 md:h-64 lg:w-120 lg:h-120">
                       <Image
                         src="/images/hero-image.png"
                         alt="Ka'bah"
                         fill
                         className="object-contain drop-shadow-lg"
                         priority
-                        sizes="(max-width: 640px) 288px, (max-width: 768px) 320px, (max-width: 1024px) 256px, 480px"
+                        sizes="(max-width: 640px) 384px, (max-width: 768px) 448px, (max-width: 1024px) 256px, 480px"
                         unoptimized
                       />
                     </div>
