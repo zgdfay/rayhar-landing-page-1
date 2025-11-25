@@ -132,7 +132,7 @@ export function HeroSection() {
                 asChild
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white rounded-lg px-8 py-6 text-base md:text-lg font-medium shadow-md transition-all duration-200 hover:shadow-lg">
-                <Link href="#booking">Lihat Pakej</Link>
+                <Link href="#pakej-haji">Lihat Pakej</Link>
               </Button>
             </div>
           </motion.div>
