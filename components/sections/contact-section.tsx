@@ -428,7 +428,7 @@ export function ContactSection() {
                   disabled={status === 'submitting' || hasClaimed}
                   className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-3 text-base font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                   {hasClaimed ? (
-                    <>Hadiah Sudah Diklaim</>
+                    <>Sila Tuntut Hadiah di Booth Rayhar</>
                   ) : status === 'submitting' ? (
                     <>Menghantar...</>
                   ) : (

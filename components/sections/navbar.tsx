@@ -27,6 +27,13 @@ export function Navbar() {
   const isScrollingRef = useRef(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Helper function to get navbar height
+  const getNavbarHeight = () => {
+    if (typeof window === 'undefined') return 80;
+    const isMobile = window.innerWidth < 1024;
+    return isMobile ? 64 : 80; // h-16 = 64px, h-20 = 80px
+  };
+
   // Helper function to update active section based on scroll position
   const updateActiveSectionFromScroll = () => {
     // Skip if programmatic scroll is happening
@@ -42,7 +49,11 @@ export function Navbar() {
       'testimonial',
       'hubungi',
     ];
-    const scrollPosition = window.scrollY + 120; // Offset for navbar height
+
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+    const navbarHeight = getNavbarHeight();
+    // Use getBoundingClientRect for more accurate detection on mobile
+    const viewportOffset = isMobile ? navbarHeight + 30 : navbarHeight + 20;
 
     // Check from bottom to top to get the most recent section
     let currentSection = 'hero'; // Default to hero
@@ -50,17 +61,29 @@ export function Navbar() {
     for (let i = sections.length - 1; i >= 0; i--) {
       const section = document.getElementById(sections[i]);
       if (section) {
-        const sectionTop = section.offsetTop;
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top + window.scrollY;
+        const scrollPosition = window.scrollY + viewportOffset;
 
-        if (scrollPosition >= sectionTop) {
-          currentSection = sections[i];
-          break;
+        // For mobile, check if section is in viewport with better threshold
+        if (isMobile) {
+          // Check if section top is above the viewport offset
+          if (sectionTop <= scrollPosition) {
+            currentSection = sections[i];
+            break;
+          }
+        } else {
+          // Desktop: use original logic
+          if (scrollPosition >= sectionTop) {
+            currentSection = sections[i];
+            break;
+          }
         }
       }
     }
 
     // If scrolled to very top, set hero as active
-    if (window.scrollY < 50) {
+    if (window.scrollY < 100) {
       currentSection = 'hero';
     }
 
@@ -119,9 +142,26 @@ export function Navbar() {
       setTimeout(() => {
         const section = document.getElementById(hash);
         if (section) {
-          const offsetTop = section.offsetTop - 80;
+          const navbarHeight = getNavbarHeight();
+          const isMobile = window.innerWidth < 1024;
+
+          // Use getBoundingClientRect for more accurate position
+          const rect = section.getBoundingClientRect();
+          const scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+          const sectionTop = rect.top + scrollTop;
+
+          // Use smaller offset for better accuracy
+          const extraOffset = isMobile ? 10 : 5;
+          const offsetTop = sectionTop - navbarHeight - extraOffset;
+
+          // Ensure we don't scroll past the section
+          const maxScroll =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const finalOffset = Math.min(Math.max(0, offsetTop), maxScroll);
+
           window.scrollTo({
-            top: offsetTop,
+            top: finalOffset,
             behavior: 'smooth',
           });
           setActiveSection(hash);
@@ -130,7 +170,7 @@ export function Navbar() {
           setTimeout(() => {
             isScrollingRef.current = false;
             updateActiveSectionFromScroll();
-          }, 600);
+          }, 800);
         }
       }, 100);
     } else {
@@ -166,9 +206,27 @@ export function Navbar() {
         isScrollingRef.current = true;
         setActiveSection(sectionId);
 
-        const offsetTop = section.offsetTop - 80; // Account for navbar height
+        // Get dynamic navbar height
+        const navbarHeight = getNavbarHeight();
+        const isMobile = window.innerWidth < 1024;
+
+        // Use getBoundingClientRect for more accurate position
+        const rect = section.getBoundingClientRect();
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        const sectionTop = rect.top + scrollTop;
+
+        // Use smaller offset for better accuracy, especially for last section
+        const extraOffset = isMobile ? 10 : 5;
+        const offsetTop = sectionTop - navbarHeight - extraOffset;
+
+        // Ensure we don't scroll past the section
+        const maxScroll =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const finalOffset = Math.min(Math.max(0, offsetTop), maxScroll);
+
         window.scrollTo({
-          top: offsetTop,
+          top: finalOffset,
           behavior: 'smooth',
         });
 
@@ -188,12 +246,12 @@ export function Navbar() {
           isScrollingRef.current = false;
           // Final check after scroll completes
           updateActiveSectionFromScroll();
-        }, scrollDuration + 100);
+        }, scrollDuration + 200);
 
         // Close mobile menu after scroll starts
         setTimeout(() => {
           handleCloseMenu();
-        }, 100);
+        }, 150);
       }
     } else if (href === '/') {
       e.preventDefault();

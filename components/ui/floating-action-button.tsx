@@ -70,13 +70,13 @@ export function FloatingActionButton({
     <button
       onClick={handleClick}
       className={cn(
-        'fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105',
-        'md:bottom-8 md:right-8',
+        'fixed bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8 z-50 flex items-center gap-1.5 sm:gap-2 bg-primary hover:bg-primary/90 text-white px-4 py-3 sm:px-6 sm:py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 touch-manipulation',
+        'max-w-[calc(100vw-2rem)] sm:max-w-none',
         className
       )}
       aria-label="Claim Hadiah">
-      <Gift className="w-5 h-5" />
-      <span className="font-medium text-sm md:text-base">Claim Hadiah</span>
+      <Gift className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+      <span className="font-medium text-xs sm:text-sm md:text-base whitespace-nowrap">Claim Hadiah</span>
     </button>
   );
 }
