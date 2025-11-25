@@ -94,29 +94,29 @@ export function HeroSection() {
     <motion.section
       ref={heroRef}
       id="hero"
-      className="relative w-full bg-linear-to-b from-white via-gray-50 to-white py-12 md:py-16 lg:py-20"
+      className="relative w-full bg-linear-to-b from-white via-gray-50 to-white py-10 sm:py-12 md:py-16 lg:py-20 xl:py-24"
       variants={fadeInUpSlow}
       initial="hidden"
       whileInView="visible"
       viewport={viewportMotion}>
       <motion.div
-        className="container mx-auto px-4"
+        className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8"
         variants={staggerContainer(0.06, 0.08)}>
         {/* Main Content - 2 Columns */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 md:mb-16 lg:mb-20">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center mb-10 sm:mb-12 md:mb-16 lg:mb-20">
           {/* Left Column - Text Content */}
           <motion.div
-            className="space-y-6 md:space-y-8 text-center lg:text-left"
+            className="space-y-4 sm:space-y-6 md:space-y-8 text-center lg:text-left"
             variants={itemFade}>
             {/* Headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 leading-tight px-1 sm:px-0">
               SEJAK 1990/1410H
               <br />
               <span className="text-primary">37 Tahun</span>
             </h1>
 
             {/* Description */}
-            <p className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0 px-2 sm:px-0">
               Kami bukan sekadar menguruskan perjalanan ibadah; kami junjung
               amanah yang suci menyantuni tetamu Allah dan Rasul dengan penuh
               tanggungjawab. Sebagai antara perintis pengurusan haji di
@@ -131,7 +131,7 @@ export function HeroSection() {
               <Button
                 asChild
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white rounded-lg px-8 py-6 text-base md:text-lg font-medium shadow-md transition-all duration-200 hover:shadow-lg">
+                className="bg-primary hover:bg-primary/90 text-white rounded-lg px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base md:text-lg font-medium shadow-md transition-all duration-200 hover:shadow-lg touch-manipulation">
                 <Link href="#pakej-haji">Lihat Pakej</Link>
               </Button>
             </div>
@@ -148,14 +148,14 @@ export function HeroSection() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                   <div className="relative">
                     {/* Hero Image */}
-                    <div className="relative w-96 h-96 sm:w-md sm:h-112 md:w-64 md:h-64 lg:w-120 lg:h-120">
+                    <div className="relative w-96 h-96 sm:w-md sm:h-112 md:w-72 md:h-72 lg:w-120 lg:h-120 xl:w-[500px] xl:h-[500px]">
                       <Image
                         src="/images/hero-image.png"
                         alt="Ka'bah"
                         fill
                         className="object-contain drop-shadow-lg"
                         priority
-                        sizes="(max-width: 640px) 384px, (max-width: 768px) 448px, (max-width: 1024px) 256px, 480px"
+                        sizes="(max-width: 640px) 384px, (max-width: 768px) 448px, (max-width: 1024px) 288px, (max-width: 1280px) 480px, 500px"
                         unoptimized
                       />
                     </div>
@@ -185,21 +185,21 @@ export function HeroSection() {
 
         {/* Partner Section */}
         <motion.div
-          className="py-6 md:py-8 lg:py-10 border-t border-gray-200"
+          className="py-4 sm:py-6 md:py-8 lg:py-10 border-t border-gray-200"
           variants={sectionFade}>
           <div className="max-w-7xl mx-auto">
-            <p className="text-center text-xs md:text-sm font-medium text-gray-500 mb-3 sm:mb-4 md:mb-6 lg:mb-8 tracking-wider px-4">
+            <p className="text-center text-[10px] sm:text-xs md:text-sm font-medium text-gray-500 mb-2 sm:mb-3 md:mb-4 lg:mb-6 xl:mb-8 tracking-wider px-2 sm:px-4">
               Dipercayai & Bekerjasama Dengan
             </p>
 
             {/* Partner Logos - Grid 2 rows on mobile, inline on desktop */}
             <motion.div
-              className="grid grid-cols-3 gap-4 sm:gap-6 md:flex md:items-center md:justify-center md:gap-6 lg:gap-8 xl:gap-10 px-4"
+              className="grid grid-cols-3 gap-2 sm:gap-4 md:flex md:items-center md:justify-center md:gap-6 lg:gap-8 xl:gap-10 px-2 sm:px-4"
               variants={staggerContainer(0.05, 0.07)}>
               {partners.map((partner, index) => (
                 <motion.div
                   key={partner.alt}
-                  className="flex items-center justify-center w-full h-[50px] sm:h-[60px] md:w-[120px] md:h-[60px] lg:w-[180px] lg:h-[90px]"
+                  className="flex items-center justify-center w-full h-[40px] sm:h-[50px] md:w-[120px] md:h-[60px] lg:w-[180px] lg:h-[90px]"
                   variants={itemFade}>
                   <Image
                     src={partner.src}
@@ -208,7 +208,7 @@ export function HeroSection() {
                     height={LOGO_HEIGHT_DESKTOP}
                     className="object-contain w-full h-full"
                     priority={index < 3}
-                    sizes="(max-width: 768px) 33vw, (max-width: 1024px) 120px, 180px"
+                    sizes="(max-width: 640px) 33vw, (max-width: 768px) 33vw, (max-width: 1024px) 120px, 180px"
                   />
                 </motion.div>
               ))}

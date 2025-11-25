@@ -81,7 +81,7 @@ export function SpecialPriceSection() {
   return (
     <motion.section
       id="special-price"
-      className="relative w-full bg-linear-to-b from-white via-gray-50 to-white py-16 md:py-20 lg:py-24"
+      className="relative w-full bg-linear-to-b from-white via-gray-50 to-white py-12 sm:py-16 md:py-20 lg:py-24"
       variants={sectionFade}
       initial="hidden"
       whileInView="visible"
@@ -93,26 +93,26 @@ export function SpecialPriceSection() {
       </div>
 
       <motion.div
-        className="container mx-auto px-4 max-w-7xl relative z-10"
+        className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl relative z-10"
         variants={staggerContainer()}>
         {/* Header */}
         <motion.div
-          className="mb-12 md:mb-16 lg:mb-20 text-center"
+          className="mb-8 sm:mb-12 md:mb-16 lg:mb-20 text-center"
           variants={itemFade}>
-          <div className="inline-block mb-4 px-4 py-2 bg-primary/10 rounded-full">
-            <span className="text-primary font-semibold text-sm md:text-base">
+          <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 rounded-full">
+            <span className="text-primary font-semibold text-xs sm:text-sm md:text-base">
               Tawaran Istimewa
             </span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 px-2 sm:px-0">
             Tawaran Istimewa{' '}
             <span className="bg-linear-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               Jemaah P1
             </span>
           </h1>
 
-          <p className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto px-2 sm:px-0">
             Daftarkan diri anda sebelum 4 Januari 2026 untuk menikmati kesemua
             nilai tambah percuma ini, sebagai tanda penghargaan kami di atas
             kepercayaan anda.
@@ -121,7 +121,7 @@ export function SpecialPriceSection() {
 
         {/* Offers Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10"
           variants={staggerContainer(0.03, 0.05)}>
           {specialOffers.map((offer, index) => (
             <motion.div
@@ -135,34 +135,34 @@ export function SpecialPriceSection() {
                 {/* Number Badge */}
                 <div className="absolute top-0 left-0 z-20">
                   <div
-                    className="px-3 py-1.5 md:px-4 md:py-2 rounded-br-lg rounded-tl-lg bg-linear-to-br from-primary to-primary/90 text-white font-bold text-sm md:text-base shadow-md"
+                    className="px-2.5 sm:px-3 py-1 sm:py-1.5 md:px-4 md:py-2 rounded-br-lg rounded-tl-lg bg-linear-to-br from-primary to-primary/90 text-white font-bold text-xs sm:text-sm md:text-base shadow-md"
                     aria-label={`Pakej ${index + 1}`}>
                     {index + 1}
                   </div>
                 </div>
 
-                <CardHeader className="pb-4 md:pb-5 pt-14 md:pt-16 px-6 relative z-10">
-                  <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors duration-300">
+                <CardHeader className="pb-3 sm:pb-4 md:pb-5 pt-12 sm:pt-14 md:pt-16 px-4 sm:px-6 relative z-10">
+                  <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors duration-300">
                     {offer.title}
                   </CardTitle>
                   {offer.smallTitle && (
-                    <p className="text-xs sm:text-sm font-normal text-muted-foreground mt-1.5 sm:mt-2">
+                    <p className="text-[10px] sm:text-xs md:text-sm font-normal text-muted-foreground mt-1 sm:mt-1.5 md:mt-2">
                       {offer.smallTitle}
                     </p>
                   )}
                 </CardHeader>
 
-                <CardContent className="flex-1 flex flex-col px-6 pb-6 pt-0 relative z-10">
+                <CardContent className="flex-1 flex flex-col px-4 sm:px-6 pb-4 sm:pb-6 pt-0 relative z-10">
                   {/* Description */}
-                  <div className="mb-6 md:mb-8">
+                  <div className="mb-4 sm:mb-6 md:mb-8">
                     <div
-                      className="text-sm md:text-base text-gray-600 leading-relaxed"
+                      className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: offer.description }}
                     />
                   </div>
 
                   {/* Image Container */}
-                  <div className="relative w-full aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300 mt-auto">
+                  <div className="relative w-full aspect-video bg-gray-100 rounded-lg sm:rounded-xl overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300 mt-auto">
                     {/* Image Overlay */}
                     <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
 
@@ -171,7 +171,7 @@ export function SpecialPriceSection() {
                       alt={`${offer.title} - Layanan Rayhar Travel`}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       priority={index < 3}
                     />
                   </div>

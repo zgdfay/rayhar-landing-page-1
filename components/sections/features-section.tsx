@@ -114,7 +114,7 @@ export function FeaturesSection() {
       </div>
 
       <motion.div
-        className="container mx-auto px-4 max-w-7xl relative z-10"
+        className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl relative z-10"
         variants={staggerContainer()}>
         {/* Header */}
         <motion.div
@@ -144,7 +144,7 @@ export function FeaturesSection() {
 
         {/* Features Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10"
           variants={staggerContainer(0.03, 0.05)}>
           {features.map((feature, index) => (
             <motion.div
@@ -158,14 +158,14 @@ export function FeaturesSection() {
                 {/* Number Badge */}
                 <div className="absolute top-0 left-0 z-20">
                   <div
-                    className="px-3 py-1.5 md:px-4 md:py-2 rounded-br-lg rounded-tl-lg bg-linear-to-br from-primary to-primary/90 text-white font-bold text-sm md:text-base shadow-md"
+                    className="px-2.5 sm:px-3 py-1 sm:py-1.5 md:px-4 md:py-2 rounded-br-lg rounded-tl-lg bg-linear-to-br from-primary to-primary/90 text-white font-bold text-xs sm:text-sm md:text-base shadow-md"
                     aria-label={`Fitur ${index + 1}`}>
                     {index + 1}
                   </div>
                 </div>
 
-                <CardHeader className="pb-4 md:pb-5 pt-14 md:pt-16 px-6 relative z-10">
-                  <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors duration-300">
+                <CardHeader className="pb-3 sm:pb-4 md:pb-5 pt-12 sm:pt-14 md:pt-16 px-4 sm:px-6 relative z-10">
+                  <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors duration-300">
                     {feature.title}
                   </CardTitle>
                   {feature.smallTitle && (
@@ -175,17 +175,17 @@ export function FeaturesSection() {
                   )}
                 </CardHeader>
 
-                <CardContent className="flex-1 flex flex-col px-6 pb-6 pt-0 relative z-10">
+                <CardContent className="flex-1 flex flex-col px-4 sm:px-6 pb-4 sm:pb-6 pt-0 relative z-10">
                   {/* Description */}
-                  <div className="mb-6 md:mb-8">
+                  <div className="mb-4 sm:mb-6 md:mb-8">
                     <div
-                      className="text-sm md:text-base text-gray-600 leading-relaxed"
+                      className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: feature.description }}
                     />
                   </div>
 
                   {/* Image Container */}
-                  <div className="relative w-full aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300 mt-auto">
+                  <div className="relative w-full aspect-video bg-gray-100 rounded-lg sm:rounded-xl overflow-hidden shadow-md group-hover:shadow-lg transition-shadow duration-300 mt-auto">
                     {/* Image Overlay */}
                     <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
 

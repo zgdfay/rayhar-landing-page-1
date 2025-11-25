@@ -30,8 +30,10 @@ export function Navbar() {
   // Helper function to get navbar height
   const getNavbarHeight = () => {
     if (typeof window === 'undefined') return 80;
-    const isMobile = window.innerWidth < 1024;
-    return isMobile ? 64 : 80; // h-16 = 64px, h-20 = 80px
+    const width = window.innerWidth;
+    if (width < 640) return 56; // h-14 = 56px (small mobile)
+    if (width < 1024) return 64; // h-16 = 64px (mobile/tablet)
+    return 80; // h-20 = 80px (desktop)
   };
 
   // Helper function to update active section based on scroll position
@@ -289,8 +291,8 @@ export function Navbar() {
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20 relative">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 sm:h-16 md:h-20 relative">
           {/* Logo */}
           <Link
             href="/"
@@ -301,7 +303,7 @@ export function Navbar() {
               alt="RAYHAR Logo"
               width={100}
               height={40}
-              className="h-7 md:h-10 w-auto"
+              className="h-6 sm:h-7 md:h-10 w-auto"
               priority
             />
           </Link>
@@ -341,14 +343,14 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-all duration-200 z-10 active:scale-95"
+            className="lg:hidden p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-all duration-200 z-10 active:scale-95 touch-manipulation"
             onClick={toggleMenu}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}>
             {isMenuOpen ? (
-              <X className="h-5 w-5 md:h-6 md:w-6 text-gray-700 transition-transform duration-200" />
+              <X className="h-5 w-5 sm:h-5 sm:w-5 md:h-6 md:w-6 text-gray-700 transition-transform duration-200" />
             ) : (
-              <Menu className="h-5 w-5 md:h-6 md:w-6 text-gray-700 transition-transform duration-200" />
+              <Menu className="h-5 w-5 sm:h-5 sm:w-5 md:h-6 md:w-6 text-gray-700 transition-transform duration-200" />
             )}
           </button>
         </div>
@@ -358,12 +360,12 @@ export function Navbar() {
           className={cn(
             'lg:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-xl z-50 overflow-hidden transition-all duration-300 ease-in-out',
             isMenuOpen
-              ? 'max-h-[80vh] opacity-100 translate-y-0 rounded-b-2xl md:rounded-b-3xl'
+              ? 'max-h-[85vh] sm:max-h-[80vh] opacity-100 translate-y-0 rounded-b-xl sm:rounded-b-2xl md:rounded-b-3xl'
               : 'max-h-0 opacity-0 -translate-y-4 pointer-events-none'
           )}>
-          <div className="container mx-auto px-4 py-4 max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-5rem)] overflow-y-auto">
+          <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-h-[calc(100vh-3.5rem)] sm:max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-5rem)] overflow-y-auto">
             <nav
-              className="flex flex-col gap-1.5"
+              className="flex flex-col gap-1 sm:gap-1.5"
               aria-label="Mobile navigation">
               {navItems.map((item) => {
                 let isActive = false;
@@ -381,7 +383,7 @@ export function Navbar() {
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
                     className={cn(
-                      'block text-gray-700 hover:text-primary hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 font-medium py-3 px-4 text-sm rounded-lg',
+                      'block text-gray-700 hover:text-primary hover:bg-gray-50 active:bg-gray-100 transition-all duration-200 font-medium py-2.5 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm rounded-lg touch-manipulation',
                       isActive && 'text-primary bg-primary/10 font-semibold'
                     )}
                     aria-current={isActive ? 'page' : undefined}>

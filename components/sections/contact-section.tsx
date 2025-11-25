@@ -268,28 +268,28 @@ export function ContactSection() {
   return (
     <motion.section
       id="hubungi"
-      className="relative w-full bg-linear-to-b from-white via-gray-50 to-white py-16 md:py-20 lg:py-24 overflow-hidden"
+      className="relative w-full bg-linear-to-b from-white via-gray-50 to-white py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden"
       variants={sectionFade}
       initial="hidden"
       whileInView="visible"
       viewport={viewportMotion}>
       <motion.div
-        className="container mx-auto px-4 max-w-5xl relative z-10"
+        className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 max-w-5xl relative z-10"
         variants={staggerContainer()}>
         <motion.div
-          className="text-center max-w-2xl mx-auto mb-12"
+          className="text-center max-w-2xl mx-auto mb-8 sm:mb-12"
           variants={itemFade}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm md:text-base mb-4">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 text-primary font-medium text-xs sm:text-sm md:text-base mb-3 sm:mb-4">
             Isi Borang & Dapat Hadiah
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 px-2 sm:px-0">
             Dapatkan Konsultasi{' '}
             <span className="bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
               Perjalanan Haji
             </span>{' '}
             + Hadiah Eksklusif
           </h2>
-          <p className="text-base md:text-lg text-gray-600">
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 px-2 sm:px-0">
             Lengkapkan borang di bawah, terima panggilan konsultasi peribadi
             dari pasukan Rayhar, dan nikmati hadiah eksklusif sebagai tanda
             penghargaan kami.
@@ -297,17 +297,17 @@ export function ContactSection() {
         </motion.div>
 
         <motion.div
-          className="grid lg:grid-cols-[1.1fr,0.9fr] gap-10"
+          className="grid lg:grid-cols-[1.1fr,0.9fr] gap-6 sm:gap-8 lg:gap-10"
           variants={staggerContainer(0.15, 0.1)}>
           <motion.div
-            className="bg-white shadow-xl rounded-2xl p-6 md:p-8 border border-primary/10"
+            className="bg-white shadow-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 border border-primary/10"
             variants={scaleIn}>
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="space-y-6">
+            <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-4 sm:space-y-6">
                 <div>
                   <label
                     htmlFor="fullName"
-                    className="block text-sm font-semibold text-gray-700 mb-1.5">
+                    className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-1.5">
                     Nama
                   </label>
                   <Input
@@ -317,7 +317,7 @@ export function ContactSection() {
                     required
                     value={formData.fullName}
                     onChange={handleChange}
-                    className="bg-white/80"
+                    className="bg-white/80 text-sm sm:text-base"
                     placeholder="Nama seperti dalam IC"
                     disabled={status === 'submitting' || hasClaimed}
                   />
@@ -326,21 +326,21 @@ export function ContactSection() {
                 <div>
                   <label
                     htmlFor="whatsapp"
-                    className="block text-sm font-semibold text-gray-700 mb-1.5">
+                    className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-1.5">
                     Nombor WhatsApp
                   </label>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1.5 sm:gap-2">
                     <Select
                       value={formData.countryCode}
                       onValueChange={handleCountryCodeChange}
                       disabled={status === 'submitting' || hasClaimed}>
-                      <SelectTrigger className="h-11 w-28 sm:w-36 bg-white/80 border-input rounded-xl px-2 sm:px-3 text-xs sm:text-sm shadow-sm hover:bg-white/90">
+                      <SelectTrigger className="h-10 sm:h-11 w-24 sm:w-28 md:w-36 bg-white/80 border-input rounded-lg sm:rounded-xl px-1.5 sm:px-2 md:px-3 text-xs sm:text-sm shadow-sm hover:bg-white/90">
                         <SelectValue placeholder="Pilih negara">
                           {selectedCountry.flag} {selectedCountry.code}
                         </SelectValue>
                       </SelectTrigger>
                       <SelectContent
-                        className="w-[calc(100vw-2rem)] sm:w-64 overflow-x-hidden"
+                        className="w-[calc(100vw-1.5rem)] sm:w-64 overflow-x-hidden"
                         position="popper">
                         <div className="max-h-[300px] overflow-y-auto overflow-x-hidden p-1">
                           {countryCodes.map((item: CountryCode) => (
@@ -374,7 +374,7 @@ export function ContactSection() {
                         required
                         value={formData.whatsapp}
                         onChange={handleChange}
-                        className={`bg-white/80 flex-1 ${
+                        className={`bg-white/80 flex-1 text-sm sm:text-base ${
                           fieldErrors.whatsapp
                             ? 'border-red-500 focus-visible:ring-red-500'
                             : ''
@@ -383,7 +383,7 @@ export function ContactSection() {
                         disabled={status === 'submitting' || hasClaimed}
                       />
                       {fieldErrors.whatsapp && (
-                        <p className="mt-1 text-sm text-red-600">
+                        <p className="mt-1 text-xs sm:text-sm text-red-600">
                           {fieldErrors.whatsapp}
                         </p>
                       )}
@@ -394,7 +394,7 @@ export function ContactSection() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-semibold text-gray-700 mb-1.5">
+                    className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-1.5">
                     Email
                   </label>
                   <Input
@@ -404,7 +404,7 @@ export function ContactSection() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className={`bg-white/80 ${
+                    className={`bg-white/80 text-sm sm:text-base ${
                       fieldErrors.email
                         ? 'border-red-500 focus-visible:ring-red-500'
                         : ''
@@ -413,7 +413,7 @@ export function ContactSection() {
                     disabled={status === 'submitting' || hasClaimed}
                   />
                   {fieldErrors.email && (
-                    <p className="mt-1 text-sm text-red-600">
+                    <p className="mt-1 text-xs sm:text-sm text-red-600">
                       {fieldErrors.email}
                     </p>
                   )}
@@ -426,7 +426,7 @@ export function ContactSection() {
                 <Button
                   type="submit"
                   disabled={status === 'submitting' || hasClaimed}
-                  className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl py-3 text-base font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="w-full bg-primary hover:bg-primary/90 text-white rounded-lg sm:rounded-xl py-2.5 sm:py-3 text-sm sm:text-base font-semibold flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation">
                   {hasClaimed ? (
                     <>Sila Tuntut Hadiah di Booth Rayhar</>
                   ) : status === 'submitting' ? (

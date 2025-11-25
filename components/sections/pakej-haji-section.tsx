@@ -449,7 +449,7 @@ export function PakejHajiSection() {
   return (
     <motion.section
       id="pakej-haji"
-      className="relative w-full bg-linear-to-b from-white via-gray-50 to-white py-16 md:py-20 lg:py-24"
+      className="relative w-full bg-linear-to-b from-white via-gray-50 to-white py-12 sm:py-16 md:py-20 lg:py-24"
       variants={sectionFade}
       initial="hidden"
       whileInView="visible"
@@ -461,26 +461,26 @@ export function PakejHajiSection() {
       </div>
 
       <motion.div
-        className="container mx-auto px-4 max-w-7xl relative z-10"
+        className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl relative z-10"
         variants={staggerContainer()}>
         {/* Header */}
         <motion.div
-          className="mb-12 md:mb-16 lg:mb-20 text-center"
+          className="mb-8 sm:mb-12 md:mb-16 lg:mb-20 text-center"
           variants={itemFade}>
-          <div className="inline-block mb-4 px-4 py-2 bg-primary/10 rounded-full">
-            <span className="text-primary font-semibold text-sm md:text-base">
+          <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 rounded-full">
+            <span className="text-primary font-semibold text-xs sm:text-sm md:text-base">
               Pakej Haji 2026
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 px-2 sm:px-0">
             Pakej Haji{' '}
             <span className="bg-linear-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               Musim 1447H
             </span>
           </h2>
 
-          <p className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto px-2 sm:px-0">
             Pilih pakej haji yang sesuai dengan keperluan dan kemampuan anda.
             Setiap pakej dilengkapi dengan fasilitas lengkap untuk memastikan
             pengalaman ibadah haji yang sempurna.
@@ -490,7 +490,7 @@ export function PakejHajiSection() {
         {/* Pakej Cards Grid */}
         <motion.div
           ref={scrollRef}
-          className="flex gap-6 md:gap-8 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory -mx-4 px-6 md:mx-0 md:px-0"
+          className="flex gap-4 sm:gap-6 md:gap-8 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory -mx-3 sm:-mx-4 px-4 sm:px-6 md:mx-0 md:px-0"
           variants={staggerContainer(0.08, 0.08)}>
           {pakejHaji.map((pakej) => {
             const isBlue = pakej.colorScheme === 'blue';
@@ -519,11 +519,11 @@ export function PakejHajiSection() {
             return (
               <motion.div
                 key={pakej.id}
-                className="shrink-0 w-[340px] md:w-[380px] lg:w-[400px] snap-center px-2 md:px-0"
+                className="shrink-0 w-[280px] sm:w-[320px] md:w-[380px] lg:w-[400px] snap-center px-1 sm:px-2 md:px-0"
                 variants={itemFade}>
-                <Card className="bg-white border border-gray-200 overflow-hidden flex flex-col h-full transition-all duration-300 hover:shadow-xl rounded-xl">
+                <Card className="bg-white border border-gray-200 overflow-hidden flex flex-col h-full transition-all duration-300 hover:shadow-xl rounded-lg sm:rounded-xl">
                   {/* Hotel Image */}
-                  <div className="relative h-48 md:h-56 w-full bg-gray-100">
+                  <div className="relative h-40 sm:h-48 md:h-56 w-full bg-gray-100">
                     {pakej.image && (
                       <Image
                         src={pakej.image}
@@ -535,28 +535,28 @@ export function PakejHajiSection() {
                     )}
                   </div>
 
-                  <CardContent className="p-4 md:p-5 flex flex-col grow">
+                  <CardContent className="p-3 sm:p-4 md:p-5 flex flex-col grow">
                     {/* Hotel Name */}
-                    <div className="mb-3">
-                      <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-0.5">
+                    <div className="mb-2 sm:mb-3">
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-0.5">
                         {pakej.hotelName}
                       </h3>
                       {pakej.hotelSubName && (
-                        <h4 className="text-base md:text-lg font-semibold text-gray-700">
+                        <h4 className="text-sm sm:text-base md:text-lg font-semibold text-gray-700">
                           {pakej.hotelSubName}
                         </h4>
                       )}
                     </div>
 
                     {/* Hotel Info - Makkah & Madinah */}
-                    <div className="space-y-2 mb-3">
+                    <div className="space-y-1.5 sm:space-y-2 mb-2 sm:mb-3">
                       {/* Makkah Hotel */}
                       {pakej.makkah && (
-                        <div className="bg-gray-50 rounded-md p-2 border border-gray-200">
-                          <p className="text-xs font-semibold text-gray-900 mb-0.5">
+                        <div className="bg-gray-50 rounded-md p-1.5 sm:p-2 border border-gray-200">
+                          <p className="text-[10px] sm:text-xs font-semibold text-gray-900 mb-0.5">
                             Makkah:
                           </p>
-                          <p className="text-xs text-gray-700 leading-snug">
+                          <p className="text-[10px] sm:text-xs text-gray-700 leading-snug">
                             <span className="font-semibold">
                               {pakej.makkah.name}
                               {pakej.makkah.abbreviation &&
@@ -570,11 +570,11 @@ export function PakejHajiSection() {
 
                       {/* Madinah Hotel */}
                       {pakej.madinah && (
-                        <div className="bg-gray-50 rounded-md p-2 border border-gray-200">
-                          <p className="text-xs font-semibold text-gray-900 mb-0.5">
+                        <div className="bg-gray-50 rounded-md p-1.5 sm:p-2 border border-gray-200">
+                          <p className="text-[10px] sm:text-xs font-semibold text-gray-900 mb-0.5">
                             Madinah:
                           </p>
-                          <p className="text-xs text-gray-700 leading-snug">
+                          <p className="text-[10px] sm:text-xs text-gray-700 leading-snug">
                             <span className="font-semibold">
                               {pakej.madinah.name}
                               {pakej.madinah.abbreviation &&
@@ -588,11 +588,11 @@ export function PakejHajiSection() {
 
                       {/* Aziziah Hotel */}
                       {pakej.aziziah && (
-                        <div className="bg-gray-50 rounded-md p-2 border border-gray-200">
-                          <p className="text-xs font-semibold text-gray-900 mb-0.5">
+                        <div className="bg-gray-50 rounded-md p-1.5 sm:p-2 border border-gray-200">
+                          <p className="text-[10px] sm:text-xs font-semibold text-gray-900 mb-0.5">
                             Aziziah:
                           </p>
-                          <p className="text-xs text-gray-700 leading-snug">
+                          <p className="text-[10px] sm:text-xs text-gray-700 leading-snug">
                             <span className="font-semibold">
                               {pakej.aziziah.name}
                               {pakej.aziziah.abbreviation &&
@@ -624,7 +624,7 @@ export function PakejHajiSection() {
                     <div className="block mt-auto">
                       <Button
                         onClick={() => handleDetailClick(pakej)}
-                        className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 md:py-4 text-sm md:text-base">
+                        className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base touch-manipulation">
                         Maklumat Lanjut
                       </Button>
                     </div>
@@ -637,36 +637,36 @@ export function PakejHajiSection() {
 
         {/* Navigation Controls */}
         <motion.div
-          className="flex items-center justify-center gap-4 md:gap-6 mt-8"
+          className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-6 sm:mt-8"
           variants={itemFade}>
           {/* Left Arrow */}
           <button
             onClick={() => scroll('left')}
             disabled={!canScrollLeft}
-            className={`p-2 md:p-3 rounded-full transition-all duration-300 ${
+            className={`p-1.5 sm:p-2 md:p-3 rounded-full transition-all duration-300 touch-manipulation ${
               canScrollLeft
-                ? 'bg-primary text-white hover:bg-primary/90 hover:scale-110 shadow-lg'
+                ? 'bg-primary text-white hover:bg-primary/90 hover:scale-110 shadow-lg active:scale-95'
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
             }`}
             aria-label="Scroll left">
-            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
+            <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
           </button>
 
           {/* Dots Indicator */}
-          <div className="flex items-center justify-center gap-2.5">
+          <div className="flex items-center justify-center gap-2 sm:gap-2.5">
             {Array.from({ length: 8 }).map((_, index) => (
               <button
                 key={`indicator-${index}`}
                 onClick={() => scrollToIndex(index)}
-                className="transition-all duration-300 hover:scale-110"
+                className="transition-all duration-300 hover:scale-110 active:scale-95 touch-manipulation"
                 aria-label={`Go to position ${index + 1}`}>
                 <svg
-                  width="12"
-                  height="12"
+                  width="10"
+                  height="10"
                   viewBox="0 0 12 12"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className={`transition-all duration-300 ${
+                  className={`transition-all duration-300 sm:w-3 sm:h-3 ${
                     activeIndex === index ? 'scale-125' : 'scale-100'
                   }`}>
                   <path
@@ -685,13 +685,13 @@ export function PakejHajiSection() {
           <button
             onClick={() => scroll('right')}
             disabled={!canScrollRight}
-            className={`p-2 md:p-3 rounded-full transition-all duration-300 ${
+            className={`p-1.5 sm:p-2 md:p-3 rounded-full transition-all duration-300 touch-manipulation ${
               canScrollRight
-                ? 'bg-primary text-white hover:bg-primary/90 hover:scale-110 shadow-lg'
+                ? 'bg-primary text-white hover:bg-primary/90 hover:scale-110 shadow-lg active:scale-95'
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
             }`}
             aria-label="Scroll right">
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
+            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
           </button>
         </motion.div>
       </motion.div>

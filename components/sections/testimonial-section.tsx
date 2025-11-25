@@ -187,32 +187,32 @@ export function TestimonialSection() {
   return (
     <motion.section
       id="testimonial"
-      className="w-full bg-linear-to-b from-white via-gray-50 to-white py-16 md:py-20 lg:py-24"
+      className="w-full bg-linear-to-b from-white via-gray-50 to-white py-12 sm:py-16 md:py-20 lg:py-24"
       variants={sectionFade}
       initial="hidden"
       whileInView="visible"
       viewport={viewportMotion}>
       <motion.div
-        className="container mx-auto px-4 max-w-7xl"
+        className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 max-w-7xl"
         variants={staggerContainer()}>
         {/* Header */}
         <motion.div
-          className="mb-12 md:mb-16 lg:mb-20 text-center"
+          className="mb-8 sm:mb-12 md:mb-16 lg:mb-20 text-center"
           variants={itemFade}>
-          <div className="inline-block mb-4 px-4 py-2 bg-primary/10 rounded-full">
-            <span className="text-primary font-semibold text-sm md:text-base">
+          <div className="inline-block mb-3 sm:mb-4 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 rounded-full">
+            <span className="text-primary font-semibold text-xs sm:text-sm md:text-base">
               Testimoni Jemaah
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 px-2 sm:px-0">
             Kata{' '}
             <span className="bg-linear-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               Jemaah Kami
             </span>
           </h2>
 
-          <p className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto px-2 sm:px-0">
             Dengarkan pengalaman sebenar jemaah yang telah menunaikan ibadah
             haji dan umrah bersama Rayhar Travels
           </p>
@@ -224,34 +224,34 @@ export function TestimonialSection() {
           <div
             ref={scrollRef}
             onScroll={checkScrollButtons}
-            className="flex gap-4 md:gap-6 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide"
+            className="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory -mx-3 sm:-mx-4 px-3 sm:px-4 md:mx-0 md:px-0 scrollbar-hide"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {testimonials.map((testimonial) => (
               <motion.div
                 key={testimonial.id}
                 data-testimonial-card
-                className="shrink-0 w-[280px] md:w-[320px] lg:w-[360px] snap-center"
+                className="shrink-0 w-[260px] sm:w-[280px] md:w-[320px] lg:w-[360px] snap-center"
                 variants={scaleIn}>
                 <Card
                   onClick={() => {
                     setSelectedTestimonial(testimonial);
                     setIsModalOpen(true);
                   }}
-                  className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative group">
+                  className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative group touch-manipulation">
                   {/* Maximize Icon - Pojok Kanan Atas */}
-                  <div className="absolute top-3 right-3 z-10">
-                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-1.5 shadow-md border border-gray-200 hover:bg-white hover:shadow-lg transition-all duration-200">
-                      <Maximize2 className="w-3.5 h-3.5 text-gray-600" />
+                  <div className="absolute top-2 sm:top-3 right-2 sm:right-3 z-10">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-1 sm:p-1.5 shadow-md border border-gray-200 hover:bg-white hover:shadow-lg transition-all duration-200">
+                      <Maximize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-600" />
                     </div>
                   </div>
 
-                  <CardContent className="p-4 md:p-5 flex flex-col flex-1">
+                  <CardContent className="p-3 sm:p-4 md:p-5 flex flex-col flex-1">
                     {/* Star Rating */}
-                    <div className="flex items-center gap-0.5 mb-3">
+                    <div className="flex items-center gap-0.5 mb-2 sm:mb-3">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          className={`w-3.5 h-3.5 ${
+                          className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${
                             i < testimonial.rating
                               ? 'fill-yellow-400 text-yellow-400'
                               : 'fill-gray-200 text-gray-200'
@@ -261,26 +261,26 @@ export function TestimonialSection() {
                     </div>
 
                     {/* Testimonial Text - dengan truncate */}
-                    <p className="text-gray-900 text-sm leading-relaxed mb-4 flex-1 line-clamp-4">
+                    <p className="text-gray-900 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 flex-1 line-clamp-4">
                       {testimonial.text}
                     </p>
 
                     {/* Author Info */}
-                    <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
+                    <div className="flex items-center gap-2 sm:gap-3 pt-2 sm:pt-3 border-t border-gray-100">
                       {/* Avatar Placeholder */}
-                      <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary/20 to-primary/40 flex items-center justify-center shrink-0">
-                        <span className="text-primary font-semibold text-sm">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-linear-to-br from-primary/20 to-primary/40 flex items-center justify-center shrink-0">
+                        <span className="text-primary font-semibold text-xs sm:text-sm">
                           {testimonial.name.charAt(0)}
                         </span>
                       </div>
 
                       {/* Name and Location */}
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-gray-900 text-sm truncate">
+                        <p className="font-medium text-gray-900 text-xs sm:text-sm truncate">
                           {testimonial.name}
                         </p>
                         {testimonial.location && (
-                          <p className="text-gray-500 text-xs truncate">
+                          <p className="text-gray-500 text-[10px] sm:text-xs truncate">
                             {testimonial.location}
                           </p>
                         )}
@@ -294,36 +294,36 @@ export function TestimonialSection() {
 
           {/* Navigation Controls - Below Slider */}
           <motion.div
-            className="flex items-center justify-center gap-4 md:gap-6 mt-6"
+            className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6"
             variants={itemFade}>
             {/* Left Arrow */}
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}
-              className={`p-2 md:p-3 rounded-full transition-all duration-300 ${
+              className={`p-1.5 sm:p-2 md:p-3 rounded-full transition-all duration-300 touch-manipulation ${
                 canScrollLeft
-                  ? 'bg-primary text-white hover:bg-primary/90 hover:scale-110 shadow-lg'
+                  ? 'bg-primary text-white hover:bg-primary/90 hover:scale-110 shadow-lg active:scale-95'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
               aria-label="Scroll left">
-              <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
+              <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
             </button>
 
             {/* Dots Indicator */}
-            <div className="flex items-center justify-center gap-2.5">
+            <div className="flex items-center justify-center gap-2 sm:gap-2.5">
               {Array.from({ length: testimonials.length }).map((_, index) => (
                 <button
                   key={`dot-${index}`}
                   onClick={() => scrollToIndex(index)}
-                  className="transition-all duration-300 hover:scale-110"
+                  className="transition-all duration-300 hover:scale-110 active:scale-95 touch-manipulation"
                   aria-label={`Go to slide ${index + 1}`}>
                   <svg
-                    width="12"
-                    height="12"
+                    width="10"
+                    height="10"
                     viewBox="0 0 12 12"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`transition-all duration-300 ${
+                    className={`transition-all duration-300 sm:w-3 sm:h-3 ${
                       activeIndex === index ? 'scale-125' : 'scale-100'
                     }`}>
                     <path
@@ -344,13 +344,13 @@ export function TestimonialSection() {
             <button
               onClick={() => scroll('right')}
               disabled={!canScrollRight}
-              className={`p-2 md:p-3 rounded-full transition-all duration-300 ${
+              className={`p-1.5 sm:p-2 md:p-3 rounded-full transition-all duration-300 touch-manipulation ${
                 canScrollRight
-                  ? 'bg-primary text-white hover:bg-primary/90 hover:scale-110 shadow-lg'
+                  ? 'bg-primary text-white hover:bg-primary/90 hover:scale-110 shadow-lg active:scale-95'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
               aria-label="Scroll right">
-              <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
+              <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
             </button>
           </motion.div>
         </motion.div>
