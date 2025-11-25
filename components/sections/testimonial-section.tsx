@@ -100,25 +100,15 @@ export function TestimonialSection() {
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
 
-      // Calculate active index based on actual card width from DOM
-      const firstCard = scrollRef.current.querySelector(
-        '[data-testimonial-card]'
-      ) as HTMLElement;
-      if (firstCard) {
-        const cardWidth = firstCard.offsetWidth;
-        const gapValue = getGap();
-        const scrollPosition = scrollLeft;
-        // Add small offset to account for rounding
-        const index = Math.round(scrollPosition / (cardWidth + gapValue));
-        setActiveIndex(Math.min(Math.max(0, index), testimonials.length - 1));
-      } else {
-        // Fallback to calculated values
-        const cardWidth = getCardWidth();
-        const gap = getGap();
-        const scrollPosition = scrollLeft;
-        const index = Math.round(scrollPosition / (cardWidth + gap));
-        setActiveIndex(Math.min(Math.max(0, index), testimonials.length - 1));
-      }
+      // Calculate active index based on scroll progress (like pakej haji)
+      const totalDots = testimonials.length;
+      const maxScroll = scrollWidth - clientWidth;
+      const scrollProgress = maxScroll > 0 ? scrollLeft / maxScroll : 0;
+      const index = Math.min(
+        Math.floor(scrollProgress * totalDots),
+        totalDots - 1
+      );
+      setActiveIndex(index);
     }
   }, []);
 
@@ -180,29 +170,17 @@ export function TestimonialSection() {
     }
   };
 
-  const scrollToIndex = (index: number) => {
+  const scrollToIndex = (dotIndex: number) => {
     if (scrollRef.current) {
-      const firstCard = scrollRef.current.querySelector(
-        '[data-testimonial-card]'
-      ) as HTMLElement;
-      if (firstCard) {
-        const cardWidth = firstCard.offsetWidth;
-        const gap = getGap();
-        const scrollPosition = index * (cardWidth + gap);
-        scrollRef.current.scrollTo({
-          left: scrollPosition,
-          behavior: 'smooth',
-        });
-      } else {
-        // Fallback
-        const cardWidth = getCardWidth();
-        const gap = getGap();
-        const scrollPosition = index * (cardWidth + gap);
-        scrollRef.current.scrollTo({
-          left: scrollPosition,
-          behavior: 'smooth',
-        });
-      }
+      const totalDots = testimonials.length;
+      const { scrollWidth, clientWidth } = scrollRef.current;
+      const maxScroll = scrollWidth - clientWidth;
+      const scrollPosition = (dotIndex / (totalDots - 1)) * maxScroll;
+
+      scrollRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth',
+      });
     }
   };
 

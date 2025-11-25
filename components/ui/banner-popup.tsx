@@ -88,6 +88,11 @@ export function BannerPopup() {
     };
   }, [isOpen]);
 
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsOpen(false);
+  };
+
   const handleBannerClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsOpen(false);
@@ -108,7 +113,7 @@ export function BannerPopup() {
       <div className="relative w-full max-w-[90vw] md:max-w-sm lg:max-w-md">
         {/* Close Button */}
         <button
-          onClick={handleBannerClick}
+          onClick={handleClose}
           className="absolute top-2 right-2 md:-top-2 md:-right-2 z-10 w-9 h-9 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 group"
           aria-label="Close banner">
           <X className="w-5 h-5 md:w-7 md:h-7 text-gray-800 group-hover:text-gray-900" />

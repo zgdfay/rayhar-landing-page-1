@@ -48,8 +48,8 @@ interface PakejHaji {
 const pakejHaji: PakejHaji[] = [
   {
     id: '1',
-    hotelName: 'Safwah',
-    hotelSubName: 'ROYAL ORCHID PLATINUM',
+    hotelName: 'Safwah Royal Orchid',
+    hotelSubName: 'PLATINUM',
     rating: 5,
     distance: '50',
     destination: 'DATARAN MASJIDIL HARAM',
@@ -73,8 +73,8 @@ const pakejHaji: PakejHaji[] = [
   },
   {
     id: '2',
-    hotelName: 'Safwah',
-    hotelSubName: 'ROYAL ORCHID GOLD',
+    hotelName: 'Safwah Royal Orchid',
+    hotelSubName: 'GOLD',
     rating: 5,
     distance: '50',
     destination: 'DATARAN MASJIDIL HARAM',
@@ -104,8 +104,8 @@ const pakejHaji: PakejHaji[] = [
   },
   {
     id: '3',
-    hotelName: 'Safwah',
-    hotelSubName: 'ROYAL ORCHID SILVER',
+    hotelName: 'Safwah Royal Orchid',
+    hotelSubName: 'SILVER',
     rating: 5,
     distance: '50',
     destination: 'DATARAN MASJIDIL HARAM',
@@ -215,8 +215,7 @@ const pakejHaji: PakejHaji[] = [
   },
   {
     id: '7',
-    hotelName: 'Elaf',
-    hotelSubName: 'AL BAIT',
+    hotelName: 'Elaf Al Bait',
     rating: 5,
     distance: '190',
     destination: 'DATARAN MASJIDIL HARAM',
@@ -240,8 +239,7 @@ const pakejHaji: PakejHaji[] = [
   },
   {
     id: '8',
-    hotelName: 'Mira',
-    hotelSubName: 'AJYAD',
+    hotelName: 'Mira Ajyad',
     rating: 5,
     distance: '400',
     destination: 'DATARAN MASJIDIL HARAM',
@@ -271,7 +269,6 @@ export function PakejHajiSection() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [slugMap, setSlugMap] = useState<Record<string, string>>({});
-
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
@@ -284,11 +281,17 @@ export function PakejHajiSection() {
 
     const handleScroll = () => {
       const scrollLeft = scrollContainer.scrollLeft;
-      const cardWidth =
-        scrollContainer.querySelector('.shrink-0')?.clientWidth || 340;
-      const gap = 24; // gap-6 = 24px
-      const index = Math.round(scrollLeft / (cardWidth + gap));
-      setActiveIndex(Math.min(index, pakejHaji.length - 1));
+      const totalDots = 8;
+      const maxScroll =
+        scrollContainer.scrollWidth - scrollContainer.clientWidth;
+
+      // Calculate which dot should be active based on scroll position
+      const scrollProgress = maxScroll > 0 ? scrollLeft / maxScroll : 0;
+      const index = Math.min(
+        Math.floor(scrollProgress * totalDots),
+        totalDots - 1
+      );
+      setActiveIndex(index);
       updateScrollButtons();
     };
 
@@ -296,7 +299,10 @@ export function PakejHajiSection() {
     updateScrollButtons();
 
     // Check on resize
-    const resizeObserver = new ResizeObserver(updateScrollButtons);
+    const resizeObserver = new ResizeObserver(() => {
+      updateScrollButtons();
+      handleScroll();
+    });
     resizeObserver.observe(scrollContainer);
 
     return () => {
@@ -361,14 +367,14 @@ export function PakejHajiSection() {
     fetchSlugMapping();
   }, []);
 
-  const scrollToIndex = (index: number) => {
+  const scrollToIndex = (dotIndex: number) => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const cardWidth =
-      scrollContainer.querySelector('.shrink-0')?.clientWidth || 340;
-    const gap = 24;
-    const scrollPosition = index * (cardWidth + gap);
+    const totalDots = 8;
+    const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+    const scrollPosition = (dotIndex / (totalDots - 1)) * maxScroll;
+
     scrollContainer.scrollTo({
       left: scrollPosition,
       behavior: 'smooth',
@@ -648,12 +654,12 @@ export function PakejHajiSection() {
 
           {/* Dots Indicator */}
           <div className="flex items-center justify-center gap-2.5">
-            {Array.from({ length: pakejHaji.length }).map((_, index) => (
+            {Array.from({ length: 8 }).map((_, index) => (
               <button
                 key={`indicator-${index}`}
                 onClick={() => scrollToIndex(index)}
                 className="transition-all duration-300 hover:scale-110"
-                aria-label={`Go to pakej ${index + 1}`}>
+                aria-label={`Go to position ${index + 1}`}>
                 <svg
                   width="12"
                   height="12"
